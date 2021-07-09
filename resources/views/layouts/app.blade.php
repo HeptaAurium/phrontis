@@ -13,8 +13,10 @@
 </head>
 
 <body>
+    <div class="se-pre-con"></div>
     @include('layouts.navs.sidebar')
-    <div id="app" class="">
+    @include('flash::message')
+    <div id="app" class="mini">
         @include('layouts.navs.top-nav')
         <main>
             @yield('content')
@@ -22,6 +24,24 @@
         @include('layouts.extras.js')
         @yield('javascript')
     </div>
+    <script>
+        $('div.alert').not('alert-important').delay(5000).fadeOut(350);
+        // $(window).on('load', function() {
+        //     // Animate loader off screen
+        //     $(".se-pre-con").fadeOut("slow");;
+        // });
+
+        $(window).on('load', function() {
+            setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
+        });
+
+        function removeLoader() {
+            $(".se-pre-con").fadeOut(500, function() {
+                // fadeOut complete. Remove the loading div
+                $(".se-pre-con").remove(); //makes page more lightweight 
+            });
+        }
+    </script>
 </body>
 
 </html>

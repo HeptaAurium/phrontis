@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateStudentsTable extends Migration
@@ -15,24 +16,31 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('fname');
+            $table->string('adm_no')->nullable();
+            $table->string('fname')->nullable();
+            $table->string('status')->nullable();
             $table->string('mname')->nullable();
-            $table->string('lname');
-            $table->date('dob');
-            $table->string('gender', 6);
-            $table->string('parent_fname');
+            $table->string('lname')->nullable();
+            $table->date('dob')->nullable();
+            $table->date('doa')->nullable();
+            $table->string('gender', 6)->nullable();
+            $table->string('parent_fname')->nullable();
             $table->string('parent_mname')->nullable();
-            $table->string('parent_lname');
-            $table->string('parent_phone', 15);
-            $table->string('parent_phone_alt', 15);
-            $table->string('parent_email');
-            $table->integer('parent_county');
-            $table->string('parent_town');
-            $table->string('parent_address');
-            $table->integer('class');
-            $table->integer('stream');
+            $table->string('parent_lname')->nullable();
+            $table->string('parent_phone', 15)->nullable();
+            $table->string('parent_phone_alt', 15)->nullable();
+            $table->string('parent_email')->nullable();
+            $table->integer('parent_county')->nullable();
+            $table->string('parent_town')->nullable();
+            $table->string('parent_address')->nullable();
+            $table->integer('class')->nullable();
+            $table->integer('stream')->nullable();
+            $table->integer('branch')->nullable();
+            $table->integer('subjects_taking')->nullable();
             $table->timestamps();
         });
+        
+        DB::statement("ALTER TABLE students MODIFY COLUMN status ENUM('active', 'suspended', 'inactive')");
     }
 
     /**

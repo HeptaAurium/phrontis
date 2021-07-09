@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateGeneralSettingsTable extends Migration
@@ -17,13 +18,25 @@ class CreateGeneralSettingsTable extends Migration
             $table->id();
             $table->string('school_name');
             $table->integer('classes_have_streams');
+            $table->string('gender');
+            $table->integer('manual_adm_no');
+            $table->integer('school_has_branches');
+            $table->string('logo_path');
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE general_settings MODIFY COLUMN gender ENUM('both', 'male', 'female')");
 
         DB::table('general_settings')->insert([
             'id' => 1,
             'school_name' => 'School Name - Phrontis',
             'classes_have_streams' => 1,
+            'gender' => 'both',
+            'manual_adm_no' => 0,
+            'school_has_branches' => 1,
+            'logo_path' => "img/logo/phrontis.png",
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 

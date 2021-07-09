@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\BranchesController;
+use App\Http\Controllers\ExamsController;
+use App\Http\Controllers\ExamTypesController;
 use App\Http\Controllers\FormClassController;
+use App\Http\Controllers\StreamsController;
 use App\Http\Controllers\StudentsController;
 use App\Models\FormClass;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -27,5 +31,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('/classes', FormClassController::class);
+    Route::resource('/streams', StreamsController::class);
     Route::resource('/students', StudentsController::class);
+    Route::resource('/exam-types', ExamTypesController::class);
+    Route::resource('/exams', ExamsController::class)->except(['index', 'show']);
+    Route::resource('/branches', BranchesController::class);
+    Route::get('/examination/results/{student}', [ExamsController::class, 'show']);
+    Route::post('/exams/get-exam-list', [ExamsController::class, 'get_exam_list']);
+    Route::get('/examination/results', [ExamsController::class, 'index'])->name('results');
 });

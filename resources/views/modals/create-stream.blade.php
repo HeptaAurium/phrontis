@@ -9,9 +9,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/classes" method="post">
+                <form action="/streams" method="post" id="formCreateStream">
                     @csrf
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <div class="form-group">
+                      <label for="name">Stream Name</label>
+                      <input type="text" name="name" id="stream_name" pattern="[A-Za-z]+" title="Only alphabet characters are accepted" class="form-control" placeholder="Please provide Stream Name (alphabets only)" required>
+
+
+                     <small class="text-danger pl-3" style="transition: .6s" id="error_stream_name"></small>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-md px-5 submit-btn" id="submitStream">Save</button>
                 </form>
             </div>
             <div class="modal-footer">

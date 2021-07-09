@@ -1,12 +1,17 @@
- <nav class="navbar navbar-expand w-100 navbar-light rounded bg-white shadow-sm top-nav">
+ <nav class="navbar navbar-expand w-100 navbar-light bg-custom top-nav">
      <div class="container d-flex align-items-center">
-         <button class="btn bg-transparent d-md-none btn-toggle-sidenav" type="button" title="Show side navigation" data-toggle="tooltip">
+         <button class="btn bg-transparent d-md-none btn-toggle-sidenav" type="button" title="Show side navigation"
+             data-toggle="tooltip">
              <i class="fa fa-bars" aria-hidden="true"></i>
+         </button> 
+         
+         <button class="btn bg-transparent d-none d-md-block btn-maximize-sidenav" type="button" title="Toggle side navigation"
+             data-toggle="tooltip">
+            <i class="fa fa-indent" aria-hidden="true"></i>
          </button>
 
          <a class="navbar-brand logo d-flex flex-row align-items-center" href="{{ url('/') }}">
-             <img src="{{ asset('img/logo/phrontis.png') }}" class="w-auto img-fluid mr-3" alt="">
-             <span class="d-none d-lg-block logo-text">{{ config('app.name', 'Laravel') }}</span>
+             <span class="logo-text">{{ $general_settings->school_name }}</span>
          </a>
 
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -39,7 +44,7 @@
 
                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                              <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                     document.getElementById('logout-form').submit();">
+                                                                         document.getElementById('logout-form').submit();">
                                  {{ __('Logout') }}
                              </a>
 

@@ -36,6 +36,24 @@ class StreamsController extends Controller
     public function store(Request $request)
     {
         //
+        $check = Stream::where('name', $request->name)->first();
+
+        if (!empty($check)) {
+            flash("Sorry, stream name already exists! Check your spelling and try again")->error();
+            return back();
+        }
+
+
+        $stream = new Stream;
+        $stream->name = ucfirst(strtolower($request->name));
+
+        if ($stream->save()) {
+            flash(trans('reports.insert_success'))->success();
+        } else {
+            flash(trans('reports.error'))->error();
+        }
+
+        return back();
     }
 
     /**

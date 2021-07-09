@@ -15,6 +15,10 @@ class ExamTypesController extends Controller
     public function index()
     {
         //
+        $data = [];
+        $data['exam_types'] = ExamType::get();
+
+        return view('exam-types.index', $data);
     }
 
     /**

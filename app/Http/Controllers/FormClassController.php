@@ -43,7 +43,26 @@ class FormClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate
+        $check = FormClass::where('name', $request->name)->first();
+
+        if (!empty($check)) {
+            flash("Sorry, class name already exists! Check your spelling and try again")->error();
+            return back();
+        }
+
+        $streams = implode(",", $request->streams);
+
+        $class = new FormClass;
+        $class->name = ucwords(strtolower($request->name));
+        $class->streams = $streams;
+        if ($class->save()) {
+            flash(trans('reports.insert_success'))->success();
+        } else {
+            flash(trans('reports.error'))->error();
+        }
+
+        return back();
     }
 
     /**
@@ -86,8 +105,15 @@ class FormClassController extends Controller
      * @param  \App\Models\FormClass  $formClass
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FormClass $formClass)
+    public function destroy(Request $request)
     {
         //
+
+        if (FormClass::where('id', $request->id)->delete()) {
+            flash(trans('reports.operation_success'))->success();
+        } else {
+            flash(trans('reports.error'))->error();
+        }
+        return back();
     }
 }
