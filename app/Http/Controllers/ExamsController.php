@@ -116,6 +116,8 @@ class ExamsController extends Controller
         //
         $data = [];
         $data['student'] = Student::find($request->student);
+        $data['exam_types'] = ExamType::get();
+        $data['subjects'] = Subject::get();
         return view('students.results', $data);
     }
 

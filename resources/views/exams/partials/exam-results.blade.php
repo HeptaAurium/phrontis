@@ -45,7 +45,7 @@ $r = 1;
                 <tbody>
                     @foreach ($students as $stu)
                         <tr class="align-items-center">
-                            <td><a href="/examination/results   /{{ $stu->id }}" class="btn btn-sm btn-primary"><i
+                            <td><a href="/examination/results/{{ $stu->id }}" class="btn btn-sm btn-primary"><i
                                         class="fa fa-eye" aria-hidden="true"></i></a></td>
                             @if (\App\Utilities\SettingsUtility::classes_have_streams())
                                 <td>
@@ -84,7 +84,7 @@ $r = 1;
                                     {{ \App\Utilities\ExamUtil::grading_system_points($points, $stu->id) }}
                                 </small>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @php
                                     $posn = \App\Utilities\ExamUtil::get_student_position($mean, $item->id);
                                 @endphp

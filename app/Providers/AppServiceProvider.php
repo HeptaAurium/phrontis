@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
             '*',
             function () {
                 $general_settings = GeneralSetting::find(1);
+                
                 View::share(['general_settings' => $general_settings]);
             }
             

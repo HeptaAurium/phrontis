@@ -17,6 +17,7 @@ $title = 'Examination Results';
                 </ol>
             </div>
             <div class="panel panel-content col-12 p-3 py-5">
+                 <div class="floating-panel"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
                 <div class="row">
                     <div class="col-md-8 px-2">
                         <ul class="nav nav-tabs nav-stacked">
@@ -78,7 +79,7 @@ $title = 'Examination Results';
     <script>
         $(document).ready(function() {
             $('table.tblResults').dataTable({
-                dom: "istp",
+                dom: "tip",
                 sorting: true,
                 ordering: true,
             });

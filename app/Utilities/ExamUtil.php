@@ -49,7 +49,7 @@ class ExamUtil
 
     static function get_marks_by_type($student, $class, $subject, $type)
     {
-        dd($student . "," . $class . "," . $subject . "," . $type);
+        
         return Exam::where('students_id', $student)
             ->where('exam_type', $type)
             ->where('subject', $subject)->where('class', $class)
@@ -146,6 +146,7 @@ class ExamUtil
 
     static function compute_students_mean_score($student)
     {
+    
         $subjects = Subject::get();
         $session = Self::get_current_term();
         $stud = Student::find($student);
@@ -225,5 +226,18 @@ class ExamUtil
 
         return array_search($mn, $class_mean) + 1;
         // return $mean;
+    }
+
+    // indivudual student
+    static function get_individual_marklist($student, $subject, $session, $exam_type)
+    {
+      
+        $marks = Exam::where('students_id', $student)
+            ->where('subject', $subject)
+            ->where('session', $session)
+            ->where('exam_type', $exam_type)
+            ->first();
+
+        return !empty($marks) ? $marks->marks : "---";
     }
 }
