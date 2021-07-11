@@ -34,7 +34,7 @@
 </head>
 
 <body class="p-3">
-    <header style="background-color: #8AB4F8;color:#fff;">
+    <header style="background-color: #8AB4F8;color:#fff;padding:16px">
         <div class="row header">
             <div class="text-center col-4 logo">
                 <img src="data:image/png;base64,{!! $logo !!}" alt="" style="height: 80%; width:auto"
@@ -54,7 +54,7 @@
         @php
         $session = \App\Utilities\ExamUtil::get_current_term();
         @endphp
-        <table class="table w-100 text-center table-borderless table-xs mt-5">
+        <table class="table w-100 text-center table-borderless table-xs mt-2">
             <tbody>
                 <tr>
                     <th class="text-right">Student Name:</th>
@@ -78,7 +78,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="table w-100 text-center table-xs mt-4">
+        <table class="table w-100 text-center table-xs mt-2">
             <thead>
                 <tr>
                     <th class="text-left pl-3">Subject</th>
@@ -134,11 +134,11 @@
             </tbody>
         </table>
 
-        <div class="mean-score mt-3">
-            <table class="table table-condensed table-bordered my-3">
+        <div class="mean-score mt-1">
+            <table class="table table-condensed border my-3">
                 <tbody>
                     <tr class="border-bottom">
-                        <th>Total Marks <small>out of {{ $student->subjects_taking * 100 }}</small></th>
+                        <th>Total Marks </th>
                         <th class="text-right pr-3 border-right">
                             @php
                             $mean = 0;
@@ -148,18 +148,16 @@
                             $mean += $total;
                             }
                             @endphp
-                            {{ number_format($mean, 2) }}
+                            {{ number_format($mean, 2) }} <small>/{{ $student->subjects_taking * 100 }}</small>
                         </th>
 
-                        <th>Total Points <small>out of {{ $student->subjects_taking * 12 }}</small></th>
+                        <th>Total Points </th>
                         <th class="text-right pr-3 border-right">
                             @php
                             $points = \App\Utilities\ExamUtil::convert_to_points($mean, $student->id);
                             @endphp
-                            {{ number_format($points, 2) }}
+                            {{ number_format($points, 2) }} <small>/{{ $student->subjects_taking * 12 }}</small>
                         </th>
-                    </tr>
-                    <tr class="border-bottom">
                         <th>Mean Grade </th>
                         <th class="text-right pr-3 border-right">
                             {{ \App\Utilities\ExamUtil::grading_system_points($points, $student->id) }}
@@ -174,7 +172,7 @@
             </table>
         </div>
 
-        <div class="mean-score mt-3">
+        <div class="mean-score">
             <h3>Metrics:</h3>
             <table class="table table-condensed">
                 <tbody>
