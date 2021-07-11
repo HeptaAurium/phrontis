@@ -34,7 +34,7 @@
 </head>
 
 <body class="p-3">
-    <header style="background-color: #8AB4F8; padding: 16px;color:#fff;">
+    <header style="background-color: #8AB4F8;color:#fff;">
         <div class="row header">
             <div class="text-center col-4 logo">
                 <img src="data:image/png;base64,{!! $logo !!}" alt="" style="height: 80%; width:auto"
@@ -54,7 +54,7 @@
         @php
         $session = \App\Utilities\ExamUtil::get_current_term();
         @endphp
-        <table class="table w-100 text-center table-borderless table-xs my-5">
+        <table class="table w-100 text-center table-borderless table-xs mt-5">
             <tbody>
                 <tr>
                     <th class="text-right">Student Name:</th>

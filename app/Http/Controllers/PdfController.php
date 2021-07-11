@@ -29,6 +29,6 @@ class PdfController extends Controller
         $data['logo'] = File::get(public_path('img/branches/' . $branch->logo_path . '.txt'));
 
         $pdf = PDF::loadView('forms.student',  $data);
-        return $pdf->download($student->fname." ".$student->lname .".pdf");
+        return $pdf->download($student->fname . " " . $student->lname . ".pdf");
     }
 }
