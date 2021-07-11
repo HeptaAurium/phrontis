@@ -1,11 +1,5 @@
 $(document).ready(function () {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $('button#recordExams').click(function (e) {
+       $('button#recordExams').click(function (e) {
         e.preventDefault();
         var checkedTypes = $('.check-type:checked'),
             examClass = $('#exam_class').val(),

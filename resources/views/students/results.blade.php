@@ -12,12 +12,12 @@ $title = 'Examination Results -  ' . ucfirst(strtolower($student->fname)) . ' ' 
                 <h3 class="display-4">{{ $title }}</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/exams">Exams</a></li>
+                    <li class="breadcrumb-item"><a href="/examination/results">Exams</a></li>
                     <li class="breadcrumb-item active">{{ $title }}</li>
                 </ol>
             </div>
             <div class="panel panel-content col-12 p-3 py-5">
-                 <div class="floating-panel"><i class="fa fa-user" aria-hidden="true"></i></div>
+                <div class="floating-panel"><i class="fa fa-user" aria-hidden="true"></i></div>
                 <div class="row">
                     <div class="col-md-4 my-2 flex-center">
                         <div class="row flex-column text-center">
@@ -110,13 +110,13 @@ $title = 'Examination Results -  ' . ucfirst(strtolower($student->fname)) . ' ' 
                                     <tr class="border-bottom">
                                         <th>Mean Grade </th>
                                         <th class="text-right pr-3">
-                                            {{\App\Utilities\ExamUtil::grading_system_points($points, $student->id)}}
+                                            {{ \App\Utilities\ExamUtil::grading_system_points($points, $student->id) }}
                                         </th>
                                     </tr>
                                     <tr class="border-bottom">
                                         <th>Position in Class </th>
-                                         <th class="text-right pr-3">
-                                            {{\App\Utilities\ExamUtil::get_student_position($mean, $student->class)}}
+                                        <th class="text-right pr-3">
+                                            {{ \App\Utilities\ExamUtil::get_student_position($mean, $student->class) }}
                                         </th>
                                     </tr>
                                 </tbody>
@@ -124,13 +124,61 @@ $title = 'Examination Results -  ' . ucfirst(strtolower($student->fname)) . ' ' 
                         </div>
                     </div>
                     <hr class="hr-default">
-                    <div class="mt-3 col-12 students-results-buttons">
-                        <div class="flex-center flex-row">
-                            <a href="" class="btn btn-danger"> <i class="fas fa-file-pdf    "></i> Export PDF</a>
+                    {{-- hidden --}}
+                    <form action="/examinations/reports/student" method="post">
+                        @csrf
+                        <input type="hidden" id="student_id" name="student" value="{{ $student->id }}">
+                        <input type="hidden" id="session" name="session" value="{{ $session['id'] }}">
+
+                        <div class="mt-3 col-12 students-results-buttons">
+                            <div class="flex-center flex-row">
+                                <button id="btnPrintStudentReport-" type="submit" class="btn btn-danger"> <i class="fas fa-file-pdf"></i>
+                                    Export PDF</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+
+@stop
+@section('javascript')
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', 'button#btnPrintStudentReport', function(e) {
+                e.preventDefault();
+                $('.se-pre-con').removeClass('hidden').fadeIn();
+                $.ajax({
+                    type: "post",
+                    url: "/examinations/reports/student",
+                    data: {
+                        student: $('#student_id').val(),
+                        session: $('#session').val()
+                    },
+                    success: function(response) {
+                        var resp = JSON.parse(response);
+
+                        setTimeout(removeLoader, 2000);
+
+                        if (resp.success == "1") {
+                            Swal.fire(
+                                'Operation successful!',
+                                'Report form generated successful!',
+                                'success'
+                            );
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                            });
+                        }
+
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

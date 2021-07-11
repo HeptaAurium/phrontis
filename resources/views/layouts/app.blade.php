@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -26,10 +26,6 @@
     </div>
     <script>
         $('div.alert').not('alert-important').delay(5000).fadeOut(350);
-        // $(window).on('load', function() {
-        //     // Animate loader off screen
-        //     $(".se-pre-con").fadeOut("slow");;
-        // });
 
         $(window).on('load', function() {
             setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
@@ -38,7 +34,7 @@
         function removeLoader() {
             $(".se-pre-con").fadeOut(500, function() {
                 // fadeOut complete. Remove the loading div
-                $(".se-pre-con").remove(); //makes page more lightweight 
+                $(".se-pre-con").addClass("hidden"); //makes page more lightweight 
             });
         }
     </script>

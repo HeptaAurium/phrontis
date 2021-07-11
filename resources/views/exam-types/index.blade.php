@@ -12,7 +12,7 @@ $title = 'Examination Types';
                 <h3 class="display-4">{{ $title }}</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/exams">Exams</a></li>
+                    <li class="breadcrumb-item"><a href="/examination/results">Exams</a></li>
                     <li class="breadcrumb-item active">{{ $title }}</li>
                 </ol>
             </div>

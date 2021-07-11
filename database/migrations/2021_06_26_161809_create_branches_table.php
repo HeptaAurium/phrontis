@@ -17,6 +17,7 @@ class CreateBranchesTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('branch_head')->nullable();
+            $table->integer('logo_path')->nullable();
             $table->timestamps();
         });
     }
