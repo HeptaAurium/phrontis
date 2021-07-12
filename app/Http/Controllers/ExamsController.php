@@ -220,9 +220,10 @@ class ExamsController extends Controller
         }
 
         $pdfMerger->merge();
-        $pdfMerger->save("file_name.pdf", "browser");
+        $clss = FormClass::find($request->class);
+        $pdfMerger->save($clss->name.".pdf", "browser");
 
         $file = new Filesystem;
-        $file->cleanDirectory('pdf');
+        $file->cleanDirectory(public_path('forms'));
     }
 }
