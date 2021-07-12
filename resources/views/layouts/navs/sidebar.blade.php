@@ -74,6 +74,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/examination/results"> <i class="fa fa-circle"
                                     aria-hidden="true"></i> <span class="side-mini-text pl-3">Exam Results </span> </a>
+                        </li> 
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/examination/reports"> <i class="fa fa-circle"
+                                    aria-hidden="true"></i> <span class="side-mini-text pl-3">Report Forms </span> </a>
                         </li>
 
                     </ul>

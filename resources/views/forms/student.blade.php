@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $student->fname . ' ' . $student->lname }}</title>
-    @include('forms.partials.css')
+    {{-- @include('forms.partials.css') --}}
     <style>
         * {
             margin: 0;
@@ -29,6 +29,264 @@
         .header {
             height: 160px;
 
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table tbody+tbody {
+            border-top: 2px solid #dee2e6;
+        }
+
+        .table-sm th,
+        .table-sm td {
+            padding: 0.3rem;
+        }
+
+        .table-bordered {
+            border: 1px solid #dee2e6;
+        }
+
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+
+        .table-bordered thead th,
+        .table-bordered thead td {
+            border-bottom-width: 2px;
+        }
+
+        .p-3 {
+            padding: 1rem !important;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        .text-right {
+            text-align: right !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .col-xs-1,
+        .col-sm-1,
+        .col-md-1,
+        .col-lg-1,
+        .col-xs-2,
+        .col-sm-2,
+        .col-md-2,
+        .col-lg-2,
+        .col-xs-3,
+        .col-sm-3,
+        .col-md-3,
+        .col-lg-3,
+        .col-xs-4,
+        .col-sm-4,
+        .col-md-4,
+        .col-lg-4,
+        .col-xs-5,
+        .col-sm-5,
+        .col-md-5,
+        .col-lg-5,
+        .col-xs-6,
+        .col-sm-6,
+        .col-md-6,
+        .col-lg-6,
+        .col-xs-7,
+        .col-sm-7,
+        .col-md-7,
+        .col-lg-7,
+        .col-xs-8,
+        .col-sm-8,
+        .col-md-8,
+        .col-lg-8,
+        .col-xs-9,
+        .col-sm-9,
+        .col-md-9,
+        .col-lg-9,
+        .col-xs-10,
+        .col-sm-10,
+        .col-md-10,
+        .col-lg-10,
+        .col-xs-11,
+        .col-sm-11,
+        .col-md-11,
+        .col-lg-11,
+        .col-xs-12,
+        .col-sm-12,
+        .col-md-12,
+        .col-lg-12 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .col-lg-12 {
+            width: 100%;
+        }
+
+        .col-1 {
+            flex: 0 0 8.3333333333%;
+            max-width: 8.3333333333%;
+        }
+
+        .col-2 {
+            flex: 0 0 16.6666666667%;
+            max-width: 16.6666666667%;
+        }
+
+        .col-3 {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+
+        .col-4 {
+            flex: 0 0 33.3333333333%;
+            max-width: 33.3333333333%;
+        }
+
+        .col-5 {
+            flex: 0 0 41.6666666667%;
+            max-width: 41.6666666667%;
+        }
+
+        .col-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .col-7 {
+            flex: 0 0 58.3333333333%;
+            max-width: 58.3333333333%;
+        }
+
+        .col-8 {
+            flex: 0 0 66.6666666667%;
+            max-width: 66.6666666667%;
+        }
+
+        .col-9 {
+            flex: 0 0 75%;
+            max-width: 75%;
+        }
+
+        .col-10 {
+            flex: 0 0 83.3333333333%;
+            max-width: 83.3333333333%;
+        }
+
+        .col-11 {
+            flex: 0 0 91.6666666667%;
+            max-width: 91.6666666667%;
+        }
+
+        .col-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6 {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        h1,
+        .h1 {
+            font-size: 2.25rem;
+        }
+
+        h2,
+        .h2 {
+            font-size: 1.8rem;
+        }
+
+        h3,
+        .h3 {
+            font-size: 1.575rem;
+        }
+
+        h4,
+        .h4 {
+            font-size: 1.35rem;
+        }
+
+        h5,
+        .h5 {
+            font-size: 1.125rem;
+        }
+
+        h6,
+        .h6 {
+            font-size: 0.9rem;
+        }
+
+        .w-100 {
+            width: 100% !important;
+        }
+
+        .w-auto {
+            width: auto !important;
+        }
+        .border {
+        border: 1px solid #dee2e6 !important;
+        }
+        
+        .border-top {
+        border-top: 1px solid #dee2e6 !important;
+        }
+        
+        .border-right {
+        border-right: 1px solid #dee2e6 !important;
+        }
+        
+        .border-bottom {
+        border-bottom: 1px solid #dee2e6 !important;
+        }
+        
+        .border-left {
+        border-left: 1px solid #dee2e6 !important;
+        }
+        
+        .border-0 {
+        border: 0 !important;
+        }
+
+        small {
+            font-size: 80%;
         }
     </style>
 </head>
@@ -134,12 +392,12 @@
             </tbody>
         </table>
 
-        <div class="mean-score mt-1">
-            <table class="table table-condensed border my-3">
+        <div class="mean-score" style="margin-top: 16px">
+            <table class="table table-condensed  my-3">
                 <tbody>
-                    <tr class="border-bottom">
+                    <tr class="">
                         <th>Total Marks </th>
-                        <th class="text-right pr-3 border-right">
+                        <td class="text-right pr-3 border-right">
                             @php
                             $mean = 0;
                             foreach ($subjects as $sub) {
@@ -149,32 +407,32 @@
                             }
                             @endphp
                             {{ number_format($mean, 2) }} <small>/{{ $student->subjects_taking * 100 }}</small>
-                        </th>
+                        </td>
 
                         <th>Total Points </th>
-                        <th class="text-right pr-3 border-right">
+                        <td class="text-right pr-3 border-right">
                             @php
                             $points = \App\Utilities\ExamUtil::convert_to_points($mean, $student->id);
                             @endphp
                             {{ number_format($points, 2) }} <small>/{{ $student->subjects_taking * 12 }}</small>
-                        </th>
+                        </td>
                         <th>Mean Grade </th>
-                        <th class="text-right pr-3 border-right">
+                        <td class="text-right pr-3 border-right">
                             {{ \App\Utilities\ExamUtil::grading_system_points($points, $student->id) }}
-                        </th>
+                        </td>
 
                         <th>Position in Class </th>
-                        <th class="text-right pr-3 border-right">
+                        <td class="text-right pr-3 border-right">
                             {{ \App\Utilities\ExamUtil::get_student_position($mean, $student->class) }}
-                        </th>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="mean-score">
+        <div class="mean-score" style="margin-top: 16px;">
             <h3>Metrics:</h3>
-            <table class="table table-condensed">
+            <table class="table table-condensed w-100 border-0">
                 <tbody>
                     <tr>
                         <td>A - Excellent</td>

@@ -40,5 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/examination/results/{student}', [ExamsController::class, 'show']);
     Route::post('/exams/get-exam-list', [ExamsController::class, 'get_exam_list']);
     Route::get('/examination/results', [ExamsController::class, 'index'])->name('results');
+    Route::get('/examination/reports', [ExamsController::class, 'reports'])->name('reports');
+    Route::post('/examination/generate', [ExamsController::class, 'generate_batch']);
     Route::post('/examinations/reports/student', [PdfController::class, 'student_report']);
 });

@@ -12,6 +12,12 @@ use App\Models\Term;
 use App\Utilities\ExamUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Filesystem\Filesystem;
+use LynX39\LaraPdfMerger\Facades\PdfMerger;
+use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ExamsController extends Controller
 {
@@ -165,9 +171,58 @@ class ExamsController extends Controller
         $exam_data['subject'] = Subject::find($subject);
         $branch = $request->branch;
         $exam_data['branch'] = Branch::find($branch);
-        $exam_data['students'] = Student::where('branch', $branch)->where('class', $request->clss)->get();
+        $exam_data['students'] = Student::where('branch', $branch)->where('class', $request->clss)->orderBy('adm_no', 'ASC')->get();
 
         // $filled = ExamUtil::check_if_filled($subject, $request->cass, $exam_type, $branch);
         return view('exams.partials.exam-list', $exam_data)->render();
+    }
+
+    public function reports()
+    {
+        $data = [];
+        $data['classes'] = FormClass::get();
+        $data['session'] = ExamUtil::get_current_term();
+
+        return view('forms.create', $data);
+    }
+
+    public function generate_batch(Request $request)
+    {
+        $pdfMerger = PDFMerger::init();
+        $i = 0;
+
+        $data['exam_types'] = ExamType::get();
+        $data['subjects'] = Subject::get();
+        // $examinations = Exam::where('class', $request->class)->where('session', $request->session)->get();
+        $students = Student::where('class', $request->class)->get();
+
+        foreach ($students as $student) {
+            $data['student'] = $student;
+            $data['exam_types'] = ExamType::get();
+            $data['subjects'] = Subject::get();
+            $data['class'] = FormClass::find($student->class);
+            $branch = Branch::find($student->branch);
+            $data['branch'] = $branch;
+            $data['logo'] = File::get(public_path('img/branches/' . $branch->logo_path . '.txt'));
+
+            $pdf = PDF::loadView('forms.student',  $data);
+            // $pdf->download(public_path($student->fname . " " . $student->lname . ".pdf"));
+            $fd = public_path('forms/' . trim($data['class']->name));
+
+            if (!File::exists($fd)) {
+                File::makeDirectory($fd, 0777, true, true);
+            }
+
+
+            $pdf->save($fd . '/' .  trim($student->fname) . " " . trim($student->lname) .  '.pdf');
+            $pdfMerger->addPDF($fd . '/' .  trim($student->fname) . " " . trim($student->lname) .  '.pdf');
+            $i++;
+        }
+
+        $pdfMerger->merge();
+        $pdfMerger->save("file_name.pdf", "browser");
+
+        $file = new Filesystem;
+        $file->cleanDirectory('pdf');
     }
 }
