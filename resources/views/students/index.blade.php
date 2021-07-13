@@ -100,6 +100,7 @@ $title = 'Registered Students';
                         d.gender = $('#gender_filter').val();
                     }
                 },
+                "order": [[ 2, "desc" ],[0, 'asc']],
                 columns: [{
                         name: "adm_no",
                         data: "adm_no",

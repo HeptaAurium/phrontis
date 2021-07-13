@@ -33,7 +33,7 @@ class StudentsController extends Controller
         $data['streams'] = Stream::get();
         if ($request->ajax()) {
 
-            $students = Student::orderBy('id', 'DESC');
+            $students = Student::orderBy('class', 'DESC');
 
             if ($request->class != "all") {
                 $students->where('class', $request->class);

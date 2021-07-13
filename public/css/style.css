@@ -30,10 +30,6 @@
   background: url("../img/loader/Preloader_7.gif") center no-repeat #fff;
 }
 
-.se-pre-con.hidden{
-  display: none !important;
-}
-
 body {
   width: 100% !important;
   overflow-x: hidden !important;
@@ -261,10 +257,7 @@ select.form-control {
   position: relative;
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
-  font-family: "Roboto",
- "Helvetica",
- "Arial",
- sans-serif;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
   line-height: 1.5em;
   padding-left: 10px;
@@ -430,6 +423,17 @@ select.form-control {
   margin-bottom: 30px;
   flex-direction: column;
   padding: .8rem;
+  height: 210px;
+}
+
+.floats .floats-content {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.floats .floats-content small {
+  font-size: 9px;
 }
 
 .floats .floats-icon {
@@ -496,10 +500,7 @@ select.form-control {
   color: #3C4858;
   margin-top: 0px;
   min-height: auto;
-  font-family: 'Roboto',
- 'Helvetica',
- 'Arial',
- sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: 300;
   margin-bottom: 3px;
   text-decoration: none;
@@ -539,10 +540,7 @@ select.form-control {
   text-decoration: none;
   color: #222;
   opacity: .98;
-  font-family: 'Roboto',
- 'Helvetica',
- 'Arial',
- sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 input.exam-input {
@@ -565,19 +563,13 @@ input.exam-input {
 
 .profile-name {
   margin: 10px auto;
-  font-family: 'Roboto',
- 'Helvetica',
- 'Arial',
- sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: 600;
 }
 
 .profile-sub {
   margin: 5px auto;
-  font-family: 'Roboto',
- 'Helvetica',
- 'Arial',
- sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: 500;
 }
 

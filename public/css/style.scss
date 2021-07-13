@@ -414,6 +414,14 @@ select.form-control {
     margin-bottom: 30px;
     flex-direction: column;
     padding: .8rem;
+    height: 210px;
+
+    .floats-content{
+        align-items: center;
+        small{
+            font-size: 9px;
+        }
+    }
 
     .floats-icon {
         position: absolute;

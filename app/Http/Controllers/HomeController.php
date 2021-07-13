@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
+use App\Models\Student;
+use App\Models\Subject;
+use App\Utilities\ExamUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -27,7 +31,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-       
-        return view('home');
+        $data  = [];
+        $data['branches'] = Branch::get();
+        $data['subjects'] = Subject::count();
+        $data['session'] = ExamUtil::get_current_term();
+        $data['students'] = Student::orderBy('adm_no', 'DESC');
+        return view('home', $data);
     }
 }
