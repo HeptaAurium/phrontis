@@ -49,7 +49,7 @@ class ExamUtil
 
     static function get_marks_by_type($student, $class, $subject, $type)
     {
-        
+
         return Exam::where('students_id', $student)
             ->where('exam_type', $type)
             ->where('subject', $subject)->where('class', $class)
@@ -92,24 +92,17 @@ class ExamUtil
             ->get();
 
         $res = 0;
+        $processed_subjects = [];
 
         foreach ($results as $key) {
-            // Hard coded, to be made dynamic later
-            if ($key->class == 3 || $key->class == 4) {
-                if ($key->exam_type == 1 || $key->exam_type == 2) {
-                    $final = Self::compute_cats($key, 30);
-                } else {
-                    $final = Self::compute_full_papers($key);
-                }
-            } else {
-                if ($key->exam_type == 1 || $key->exam_type == 2) {
-                    $final = Self::compute_cats($key, 15);
-                } else {
-                    $final = Self::compute_full_papers($key);
-                }
+            // check if subect is already processed
+            if (in_array($key->subject, $processed_subjects)) {
+                continue;
             }
 
+            $final = Self::compute_full_papers($key);
             $res += $final;
+            array_push($processed_subjects, $key->subject);
         }
 
         return $res;
@@ -140,13 +133,59 @@ class ExamUtil
     }
     static function compute_full_papers($results)
     {
-        // convert it into out of 70 to be added to cat
-        return ($results->marks / $results->out_of) * 70;
+        // Get all papers for the said subject
+
+        $subject = $results->subject;
+        $student = $results->students_id;
+        $session = $results->session;
+        $marks_total = 0;
+        $cats_total = 0;
+
+        $cats =  Exam::where('students_id', $student)
+            ->where('subject', $subject)
+            ->where('session', $session)
+            ->where(function ($query) {
+                $query->where('exam_type', '=', 1)
+                    ->orWhere('exam_type', '=', 2);
+            })
+            ->get();
+
+
+        foreach ($cats as $cat) {
+            $cats_total += (($cat->marks / $cat->out_of) * 15);
+        }
+
+        // full paper
+        if ($results->class < 3) {
+            $finals = Exam::where('students_id', $student)
+                ->where('subject', $subject)
+                ->where('session', $session)
+                ->where('exam_type', 6)
+                ->first();
+            $marks_total = ($finals->marks / $finals->out_of) * 70;
+        } else {
+
+            $marks = Exam::where('students_id', $student)
+                ->where('subject', $subject)
+                ->where('session', $session)
+                ->where(function ($query) {
+                    $query->where('exam_type', '=', 3)
+                        ->orWhere('exam_type', '=', 4)
+                        ->orWhere('exam_type', '=', 5);
+                });
+
+            $final = $marks->sum('marks');
+            $tot = $marks->sum('out_of');
+
+            $marks_total = $marks->sum('marks') /   $marks->sum('out_of') *70;
+        }
+
+        return $cats_total + $marks_total;
     }
 
     static function compute_students_mean_score($student)
     {
-    
+
         $subjects = Subject::get();
         $session = Self::get_current_term();
         $stud = Student::find($student);
@@ -231,7 +270,7 @@ class ExamUtil
     // indivudual student
     static function get_individual_marklist($student, $subject, $session, $exam_type)
     {
-      
+
         $marks = Exam::where('students_id', $student)
             ->where('subject', $subject)
             ->where('session', $session)
