@@ -148,12 +148,19 @@ class ExamUtil
                 $query->where('exam_type', '=', 1)
                     ->orWhere('exam_type', '=', 2);
             })
-            ->get();
+            ->sum('marks');
+        $cats_out_of = Exam::where('students_id', $student)
+            ->where('subject', $subject)
+            ->where('session', $session)
+            ->where(function ($query) {
+                $query->where('exam_type', '=', 1)
+                    ->orWhere('exam_type', '=', 2);
+            })
+            ->sum('out_of');
 
 
-        foreach ($cats as $cat) {
-            $cats_total += (($cat->marks / $cat->out_of) * 30);
-        }
+        $cats_total += $cats / $cats_out_of * 30;
+
 
         // full paper
         if ($results->class < 3) {
@@ -162,6 +169,7 @@ class ExamUtil
                 ->where('session', $session)
                 ->where('exam_type', 6)
                 ->first();
+
             $marks_total = ($finals->marks / $finals->out_of) * 70;
         } else {
 
@@ -174,6 +182,7 @@ class ExamUtil
                         ->orWhere('exam_type', '=', 5);
                 })
                 ->sum('marks');
+
             $tot = Exam::where('students_id', $student)
                 ->where('subject', $subject)
                 ->where('session', $session)
