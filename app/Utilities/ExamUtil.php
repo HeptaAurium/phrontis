@@ -176,8 +176,8 @@ class ExamUtil
 
             $final = $marks->sum('marks');
             $tot = $marks->sum('out_of');
-
-            $marks_total = $marks->sum('marks') /   $marks->sum('out_of') *70;
+            // dd($tot === 0);
+            $marks_total = $final /  200 * 70;
         }
 
         return $cats_total + $marks_total;
