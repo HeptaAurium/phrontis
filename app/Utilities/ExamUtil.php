@@ -152,7 +152,7 @@ class ExamUtil
 
 
         foreach ($cats as $cat) {
-            $cats_total += (($cat->marks / $cat->out_of) * 30   );
+            $cats_total += (($cat->marks / $cat->out_of) * 30);
         }
 
         // full paper
@@ -165,19 +165,31 @@ class ExamUtil
             $marks_total = ($finals->marks / $finals->out_of) * 70;
         } else {
 
-            $marks = Exam::where('students_id', $student)
+            $final = Exam::where('students_id', $student)
                 ->where('subject', $subject)
                 ->where('session', $session)
                 ->where(function ($query) {
                     $query->where('exam_type', '=', 3)
                         ->orWhere('exam_type', '=', 4)
                         ->orWhere('exam_type', '=', 5);
-                });
+                })
+                ->sum('marks');
+            $tot = Exam::where('students_id', $student)
+                ->where('subject', $subject)
+                ->where('session', $session)
+                ->where(function ($query) {
+                    $query->where('exam_type', '=', 3)
+                        ->orWhere('exam_type', '=', 4)
+                        ->orWhere('exam_type', '=', 5);
+                })
+                ->sum('out_of');
 
-            $final = $marks->sum('marks');
-            $tot = $marks->sum('out_of');
+            // $final = $marks;
+            // $tot = $marks->sum('');
             // dd($tot === 0);
-            $marks_total = $final /  200 * 70;
+
+            $tot = $tot + 1;
+            $marks_total = $final /  $tot * 70;
         }
 
         return $cats_total + $marks_total;
