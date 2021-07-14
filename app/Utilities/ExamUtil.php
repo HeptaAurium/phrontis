@@ -152,7 +152,7 @@ class ExamUtil
 
 
         foreach ($cats as $cat) {
-            $cats_total += (($cat->marks / $cat->out_of) * 15);
+            $cats_total += (($cat->marks / $cat->out_of) * 30   );
         }
 
         // full paper
