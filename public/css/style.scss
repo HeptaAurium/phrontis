@@ -354,16 +354,20 @@ select.form-control {
         }
     }
 
-    #column_left ul ul {
-        // position: absolute !important;
-        min-width: 260px;
-        // display: flex;
-        // flex-direction: column;
-        height: auto;
-        z-index: 99999;
-        background: rgba(0, 0, 0, 0.9) !important;
-        padding-left: 76px;
-        border-radius: 4px;
+    #column_left ul {
+        z-index: 999 !important;
+
+        ul {
+            // position: absolute !important;
+            min-width: 260px;
+            // display: flex;
+            // flex-direction: column;
+            height: auto;
+            z-index: 99999;
+            background: rgba(0, 0, 0, 0.9) !important;
+            padding-left: 76px;
+            border-radius: 4px;
+        }
     }
 
     #column_left ul li a i {
@@ -416,9 +420,10 @@ select.form-control {
     padding: .8rem;
     height: 210px;
 
-    .floats-content{
+    .floats-content {
         align-items: center;
-        small{
+
+        small {
             font-size: 9px;
         }
     }

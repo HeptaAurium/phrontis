@@ -2,6 +2,8 @@
 
 namespace App\Utilities;
 
+// ini_set('max_execution_time', 360);      
+
 use App\Models\Exam;
 use App\Models\ExamType;
 use App\Models\Grade;
@@ -12,6 +14,13 @@ use Illuminate\Support\Facades\DB;
 
 class ExamUtil
 {
+    public $results = [];
+
+    public function __construct(array $results)
+    {
+        $this->results = $results;
+    }
+
     static function get_current_term()
     {
         $date = (int)Date('m');
@@ -88,11 +97,12 @@ class ExamUtil
         $results = Exam::where('session', $session)
             ->where('students_id', $student)
             ->where('subject', $subject)
-            // ->pluck('marks')
             ->get();
+        // dd($results);
 
         $res = 0;
         $processed_subjects = [];
+        $subject_results = [];
 
         foreach ($results as $key) {
             // check if subect is already processed
@@ -103,9 +113,24 @@ class ExamUtil
             $final = Self::compute_full_papers($key);
             $res += $final;
             array_push($processed_subjects, $key->subject);
+
+            $subject_results = [
+                'subject' => $key->subject,
+                'results' => $res,
+                'student' => $key->students_id
+            ];
+        }
+        $mean = 0;
+        for ($i = 0; $i < count($subject_results); $i++) {
+            $mean += $subject_results['results'];
         }
 
-        return $res;
+        $return = [
+            'results' => $res,
+            'mean' => $mean
+        ];
+        return $return;
+        // return 0;
     }
 
     public static function compute_exam_totals($results)
@@ -159,7 +184,7 @@ class ExamUtil
             ->sum('out_of');
 
 
-        $cats_total += $cats / $cats_out_of * 30;
+        $cats_total = $cats / $cats_out_of * 30;
 
 
         // full paper
@@ -172,7 +197,6 @@ class ExamUtil
 
             $marks_total = ($finals->marks / $finals->out_of) * 70;
         } else {
-
             $final = Exam::where('students_id', $student)
                 ->where('subject', $subject)
                 ->where('session', $session)
@@ -192,10 +216,6 @@ class ExamUtil
                         ->orWhere('exam_type', '=', 5);
                 })
                 ->sum('out_of');
-
-            // $final = $marks;
-            // $tot = $marks->sum('');
-            // dd($tot === 0);
 
             $tot = $tot + 1;
             $marks_total = $final /  $tot * 70;
@@ -276,7 +296,7 @@ class ExamUtil
         foreach ($students as $student) {
             $mean = 0;
             foreach ($subjects as $subject) {
-                $mean += Self::get_student_mark_list($student->id, $session['id'], $subject->id);
+                $mean += Self::get_student_mark_list($student->id, $session['id'], $subject->id)['results'];
             }
             array_push($class_mean, $mean);
         }
@@ -284,8 +304,8 @@ class ExamUtil
         // sort array in descending order
         rsort($class_mean);
 
-        return array_search($mn, $class_mean) + 1;
-        // return $mean;
+        return array_search($mn, $class_mean) + 1 . "<small> / </small>" . count($students);
+        // return $class_mean;
     }
 
     // indivudual student

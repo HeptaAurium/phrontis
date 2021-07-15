@@ -70,7 +70,7 @@ $title = 'Examination Results -  ' . ucfirst(strtolower($student->fname)) . ' ' 
                                         @endforeach
                                         <td>
                                             @php
-                                                $total = \App\Utilities\ExamUtil::get_student_mark_list($student->id, $session['id'], $sub->id);
+                                                $total = \App\Utilities\ExamUtil::get_student_mark_list($student->id, $session['id'], $sub->id)['results'];
                                             @endphp
                                             {{ number_format($total, 2) }}
                                         </td>
@@ -91,7 +91,7 @@ $title = 'Examination Results -  ' . ucfirst(strtolower($student->fname)) . ' ' 
                                             @php
                                                 $mean = 0;
                                                 foreach ($subjects as $sub) {
-                                                    $total = \App\Utilities\ExamUtil::get_student_mark_list($student->id, $session['id'], $sub->id);
+                                                    $total = \App\Utilities\ExamUtil::get_student_mark_list($student->id, $session['id'], $sub->id)['results'];
                                                     $mean += $total;
                                                 }
                                             @endphp
@@ -116,7 +116,7 @@ $title = 'Examination Results -  ' . ucfirst(strtolower($student->fname)) . ' ' 
                                     <tr class="border-bottom">
                                         <th>Position in Class </th>
                                         <th class="text-right pr-3">
-                                            {{ \App\Utilities\ExamUtil::get_student_position($mean, $student->class) }}
+                                            {!! \App\Utilities\ExamUtil::get_student_position($mean, $student->class) !!}
                                         </th>
                                     </tr>
                                 </tbody>
@@ -132,7 +132,8 @@ $title = 'Examination Results -  ' . ucfirst(strtolower($student->fname)) . ' ' 
 
                         <div class="mt-3 col-12 students-results-buttons">
                             <div class="flex-center flex-row">
-                                <button id="btnPrintStudentReport-" type="submit" class="btn btn-danger"> <i class="fas fa-file-pdf"></i>
+                                <button id="btnPrintStudentReport-" type="submit" class="btn btn-danger"> <i
+                                        class="fas fa-file-pdf"></i>
                                     Export PDF</button>
                             </div>
                         </div>

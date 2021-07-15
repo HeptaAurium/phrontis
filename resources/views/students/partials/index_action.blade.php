@@ -5,6 +5,6 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="triggerId">
         <a class="dropdown-item" href="students/{{ $row->id }}">Student Details</a>
-        <a class="dropdown-item" href="students/{{ $row->id }}/academics">Academics</a>
+        <a class="dropdown-item" href="examination/results/{{ $row->id }}">Academics</a>
     </div>
 </div>

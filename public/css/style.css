@@ -361,6 +361,10 @@ select.form-control {
   height: 40px;
 }
 
+.sidebar.mini #column_left ul {
+  z-index: 999 !important;
+}
+
 .sidebar.mini #column_left ul ul {
   min-width: 260px;
   height: auto;

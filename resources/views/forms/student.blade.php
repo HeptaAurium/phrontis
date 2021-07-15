@@ -380,7 +380,7 @@
                         <td>
                             @php
                             $total = \App\Utilities\ExamUtil::get_student_mark_list($student->id, $session['id'],
-                            $sub->id);
+                            $sub->id)['results'];
                             @endphp
                             {{ number_format($total, 2) }}
                         </td>
@@ -402,7 +402,7 @@
                             $mean = 0;
                             foreach ($subjects as $sub) {
                             $total = \App\Utilities\ExamUtil::get_student_mark_list($student->id, $session['id'],
-                            $sub->id);
+                            $sub->id)['results'];
                             $mean += $total;
                             }
                             @endphp
@@ -423,7 +423,7 @@
 
                         <th>Position in Class </th>
                         <td class="text-right pr-3 border-right">
-                            {{ \App\Utilities\ExamUtil::get_student_position($mean, $student->class) }}
+                            {!! \App\Utilities\ExamUtil::get_student_position($mean, $student->class) !!}
                         </td>
                     </tr>
                 </tbody>

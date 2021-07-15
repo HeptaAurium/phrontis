@@ -36,6 +36,8 @@ class HomeController extends Controller
         $data['subjects'] = Subject::count();
         $data['session'] = ExamUtil::get_current_term();
         $data['students'] = Student::orderBy('adm_no', 'DESC');
+
+        
         return view('home', $data);
     }
 }

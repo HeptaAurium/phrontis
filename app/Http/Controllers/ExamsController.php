@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+ini_set('max_execution_time', 3000);
+
 use App\Models\Branch;
 use App\Models\Exam;
 use App\Models\ExamType;
@@ -221,7 +223,7 @@ class ExamsController extends Controller
 
         $pdfMerger->merge();
         $clss = FormClass::find($request->class);
-        $pdfMerger->save($clss->name.".pdf", "browser");
+        $pdfMerger->save($clss->name . ".pdf", "browser");
 
         $file = new Filesystem;
         $file->cleanDirectory(public_path('forms'));

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ExamHelper;
 use App\Models\FormClass;
 use App\Models\Stream;
 use App\Models\Student;
@@ -27,7 +28,7 @@ class StudentsController extends Controller
      */
     public function index(Request $request)
     {
-        //
+       
         $data = [];
         $data['darasas'] = FormClass::get();
         $data['streams'] = Stream::get();

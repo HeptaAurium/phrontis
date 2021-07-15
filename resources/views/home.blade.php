@@ -7,7 +7,10 @@
         @include('home.floats')
 
         {{-- Charts --}}
-        @include('home.charts')
+        {{-- @include('home.charts') --}}
+
+        {{-- analysis --}}
+        @include('home.analysis')
     </div>
 </div>
 @endsection
